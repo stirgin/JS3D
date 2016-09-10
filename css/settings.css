@@ -1,0 +1,5 @@
+.reverse {
+-webkit-transform: rotate(180deg); /* Chrome y Safari */
+-moz-transform: rotate(180deg); /* Firefox */
+-o-transform: rotate(180deg); /* Opera */
+}
