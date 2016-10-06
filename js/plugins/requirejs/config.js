@@ -16,6 +16,11 @@ requirejs.config({
         'cylinder': 'figures/cylinder',
 
         //settings
-        'settings': 'settings'
+        'settings': 'settings',
+        'event': 'eventListner',
+        'rotate': 'rotate',
+        'mover': 'mover',
+        'helper': 'transformation',
+        'scale': 'scaleHandler'
     }
 });

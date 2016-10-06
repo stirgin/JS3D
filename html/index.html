@@ -4,20 +4,36 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <link rel="stylesheet" type="text/css" href="../css/main.css">
+    <script src="../js/plugins/math.min.js"></script>
     <script src="../js/plugins/angular-1.0.1.js"></script>
     <script src="../js/plugins/requirejs/require.js"></script>
     <script src="../js/plugins/requirejs/config.js"></script>
 </head>
 <body>
     <div ng-app="myApp">
-        <div ng-controller="myCtrl" ng-init="apprCoeff='10';cylinderRadius='20';cylinderHeight='10';coneRadius='10';coneHeight='10';myValue='10'">
+        <canvas id="myCanvas" class="reverse" width="800" height="400" style="border:1px solid #d3d3d3;">Your browser does not support the HTML5 canvas tag.</canvas>
+        <div class="right"
+             ng-controller="myCtrl"
+             ng-init="
+             apprCoeff='8';
+             cylinderRadius='50';
+             cylinderHeight='150';
+             coneRadius='50';
+             coneHeight='150';
+             myValue='10';
+             drawPoint=true;
+             drawLine=true;
+            ">
             <input id="dataChange" ng-change="main()" ng-model="myValue"  type="text" hidden value="{{myValue}}">
-            <button id="run">Run</button>
             <fieldset>
                 <legend>Draw settings:</legend>
                 Approximation coefficients:<input id="apprCoeff" ng-change="main()" ng-model="apprCoeff" type="text" placeholder="approximation coefficients" value="{{apprCoeff}}">
-                Point:<input id="draw-point" type="checkbox" placeholder="" checked value="">
-                Line:<input id="draw-line" type="checkbox" placeholder="" value="">
+                <br>
+                Point:<input id="draw-point"  ng-model="drawPoint" type="checkbox" placeholder="" value="">
+                Line:<input id="draw-line" ng-model="drawLine" type="checkbox" placeholder="" value="">
+                <br>
+                Action: <select name="" id="moveVariant" ng-model="moveVariant" ng-init="moveVariant = moveVariants[0].value"  ng-options="option.displayName for option in moveVariants">
+                </select>
             </fieldset>
             <fieldset>
                 <legend>Cylinder:</legend>
@@ -29,17 +45,24 @@
                 Radius:<input id="cone-radius" ng-change="main()" ng-model="coneRadius" type="text" placeholder="approximation coefficients" value="{{coneRadius}}">
                 Height:<input id="cone-height" ng-change="main()" ng-model="coneHeight" type="text" placeholder="approximation coefficients" value="{{coneHeight}}">
             </fieldset>
-            <canvas id="myCanvas" class="reverse" width="800" height="600" style="border:1px solid #d3d3d3;">Your browser does not support the HTML5 canvas tag.</canvas>
         </div>
     </div>
 </body>
 <script src="../js/index.js"></script>
 <script>
-angular.module('myApp', [])
-        .controller('myCtrl', ['$scope', function($scope) {
-            $scope.main = function() {
-                main.run();
-            };
-        }]);
+var app = angular.module('myApp', []);
+app.controller('myCtrl', ['$scope', function($scope) {
+    $scope.main = function() {
+        console.log('Main init()');
+        Settings.updateData();
+        main.init();
+    };
+    $scope.moveVariants = [
+        {displayName : "Transfer", value : "move"},
+        {displayName : "Rotate", value : "rotate"},
+        {displayName : "Scale", value : "scale"}
+    ];
+    $scope.moveVariant = $scope.moveVariants[0];
+}]);
 </script>
 </html>
